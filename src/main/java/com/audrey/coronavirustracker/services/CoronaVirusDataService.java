@@ -65,7 +65,7 @@ public class CoronaVirusDataService {
      * source: https://stackoverflow.com/a/1485730
      * @param urlToRead URL of the web page.
      * @return String representation of the web page's response.
-     * @throws Exception
+     * @throws Exception if the connection fails
      */
     public String getHTML(String urlToRead) throws Exception {
         StringBuilder result = new StringBuilder();
@@ -75,6 +75,7 @@ public class CoronaVirusDataService {
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String line;
         while ((line = rd.readLine()) != null) {
+            line += "\n";
             result.append(line);
         }
         rd.close();

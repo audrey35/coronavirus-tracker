@@ -32,6 +32,10 @@ public class CoronaVirusDataService {
 
     private List<LocationStats> allStats = new ArrayList<>();
 
+    public List<LocationStats> getAllStats() {
+        return allStats;
+    }
+
     @PostConstruct //tell Spring, when constructing an instance of this service, execute this method
     @Scheduled(cron="* * 1 * * *") // Schedules a method to run on a regular basis.
     // Set to run every second cron="* * * * * *"
@@ -45,8 +49,6 @@ public class CoronaVirusDataService {
         HttpResponse<String> httpResponse; // response returned when client sends the request
         httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        //System.out.println(httpResponse.body()); // print the response
-
         // Source: https://commons.apache.org/proper/commons-csv/user-guide.html
         StringReader csvBodyReader = new StringReader(httpResponse.body());
         Iterable<CSVRecord> records;
@@ -56,7 +58,6 @@ public class CoronaVirusDataService {
             locationStat.setState(record.get("Province/State"));
             locationStat.setCountry(record.get("Country/Region"));
             locationStat.setLatestTotalCases(Integer.parseInt(record.get(record.size() - 1)));
-            System.out.println(locationStat);
             newStats.add(locationStat);
         }
         this.allStats = newStats;

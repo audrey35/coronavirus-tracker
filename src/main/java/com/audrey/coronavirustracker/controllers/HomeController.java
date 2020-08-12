@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 //RestController tells Spring to convert all responses to JSON response
@@ -21,6 +23,10 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
+        LocalDate latestDate = coronaVirusDataService.getLatestDate();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("M/d/YYYY");
+        model.addAttribute("latestDate", latestDate.format(dateTimeFormatter));
+
         List<LocationStats> allStats = coronaVirusDataService.getAllStats();
         model.addAttribute("locationStats", allStats);
 

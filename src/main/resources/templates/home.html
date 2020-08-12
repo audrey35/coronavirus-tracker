@@ -5,38 +5,111 @@
 <head>
     <title>Coronavirus Tracker</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 
 <body>
     <div class="container">
-        <h1>Coronavirus Tracker Application</h1>
-        <p>This application lists the current number of cases reported across the globe.</p>
-
-        <div class="jumbotron">
-            <h1 class="display-4" th:text="${totalReportedCases}"></h1>
-            <p class="lead">Total cases reported as of today</p>
-            <hr class="my-4">
-            <p>
-                <span>New cases reported since previous day</span>
-                <span th:text="${totalNewCases}"></span>
+        <div class="row">
+            <h1>Coronavirus Tracker Application</h1>
+            <p>This application lists the current number of cases reported across the globe.
+                This app uses the
+                <a href="https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series">
+                    JHU CSSE COVID-19 Dataset</a>, which is updated once per day between 04:45 and 05:15 UTC.
             </p>
         </div>
 
-        <table class="table table-striped">
-            <tr>
-                <th>State</th>
-                <th>Country</th>
-                <th>Total cases reported</th>
-                <th>Changes since last day</th>
-            </tr>
-            <tr th:each="locationStat : ${locationStats}">
-                <td th:text="${locationStat.state}"></td>
-                <td th:text="${locationStat.country}"></td>
-                <td th:text="${locationStat.latestTotalCases}">0</td>
-                <td th:text="${locationStat.diffFromPreviousDay}">0</td>
-            </tr>
-        </table>
+        <div class="row">
+            <div class="col-sm">
+                <div id="confirmed" class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle">Confirmed cases</h6>
+                        <h3 class="card-title" th:text="${#numbers.formatDecimal(totalReportedCases, 0, 'COMMA', 0, 'POINT')}"/>
+                        <h6 class="card-subtitle" th:text="${latestDate}"></h6>
+                        <p class="card-text">Total number of confirmed cases as of today.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm">
+                <div id="new" class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle">New cases since yesterday</h6>
+                        <h3 class="card-title" th:text="${#numbers.formatDecimal(totalNewCases, 0, 'COMMA', 0, 'POINT')}"/>
+                        <h6 class="card-subtitle" th:text="${latestDate}"></h6>
+                        <p class="card-text">Total number of new cases reported since yesterday.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <canvas class="col-sm" id="myChart" width="400" height="400"></canvas>
+            <script th:inline="javascript">
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                        datasets: [{
+                            label: '# of Votes',
+                            data: [12, 19, 3, 5, 2, 3],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            </script>
+        </div>
+
+
+
+        <div class="row table-responsive">
+            <table class="col-sm table table-striped table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">State</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Total cases reported</th>
+                        <th scope="col">Changes since last day</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="locationStat : ${locationStats}">
+                        <td th:text="${locationStat.state}"></td>
+                        <td th:text="${locationStat.country}"></td>
+                        <td th:text="${#numbers.formatDecimal(locationStat.latestTotalCases, 0, 'COMMA', 0, 'POINT')}">0</td>
+                        <td th:text="${#numbers.formatDecimal(locationStat.diffFromPreviousDay, 0, 'COMMA', 0, 'POINT')}">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 

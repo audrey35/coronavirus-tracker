@@ -1,0 +1,26 @@
+h1 {
+    color: #4a69bb;
+}
+
+.card {
+    width: 16rem;
+    margin: auto;
+    border-bottom-style: solid;
+    border-bottom-width: 0.5rem;
+}
+
+.row {
+    padding: 1%;
+}
+
+#confirmed {
+    border-bottom-color: #a4d4ae;
+}
+
+#new {
+    border-bottom-color: #f0cf85;
+}
+
+.card h6 {
+    color: #32afa9;
+}

@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,8 @@ public class CoronaVirusDataService {
             "CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/" +
             "time_series_covid19_confirmed_global.csv";
 
+    private LocalDate latestDate;
+
     private List<LocationStats> allStats = new ArrayList<>();
 
     public List<LocationStats> getAllStats() {
@@ -44,6 +48,7 @@ public class CoronaVirusDataService {
 
         // Source: https://commons.apache.org/proper/commons-csv/user-guide.html
         String csvBodyString = getHTML(COVID_DATA_URL);
+        this.latestDate = getLatestDate(csvBodyString);
         StringReader csvBodyReader = new StringReader(csvBodyString);
         Iterable<CSVRecord> records;
         records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
@@ -58,6 +63,19 @@ public class CoronaVirusDataService {
             newStats.add(locationStat);
         }
         this.allStats = newStats;
+    }
+
+    public LocalDate getLatestDate() {
+        return latestDate;
+    }
+
+    private LocalDate getLatestDate(String csvString) {
+        String header = csvString.split("\n", 2)[0];
+        String[] headerList = header.split(",");
+        String date = headerList[headerList.length - 1];
+        String[] dateList = date.split("/");
+        return LocalDate.of(Integer.parseInt("20" + dateList[2]),
+                Integer.parseInt(dateList[0]), Integer.parseInt(dateList[1]));
     }
 
     /**

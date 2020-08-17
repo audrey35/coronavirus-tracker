@@ -74,7 +74,6 @@ public class HomeController {
             selected.setCountry("Global");
             model.addAttribute("countrySelected", selected);
         }
-        System.out.println("HOME");
 
         return "home";
     }
@@ -85,7 +84,6 @@ public class HomeController {
         if (country == "Global") {
             return "redirect:/";
         }
-        System.out.println("HOME to " + country);
 
         return "redirect:/" + country;
     }

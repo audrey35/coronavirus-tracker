@@ -33,26 +33,17 @@ public class TableFormat {
         HashMap<String, CountryData> deaths = format.getDeathsMap();
         List<String> countryNames = format.getCountryNames(country);
         for (String name : countryNames) {
-            System.out.println("1");
             if (country.equals(confirmed.get(name).getCountry())) {
                 RowData row = new RowData();
-                System.out.println("2");
                 CountryData data = confirmed.get(name);
-                System.out.println("3");
                 row.setCountry(data.getCountry());
-                System.out.println("4");
                 row.setState(data.getState());
-                System.out.println("5");
                 row.setConfirmed(data.getTotalCases());
-                System.out.println("6");
                 row.setRecovered(recovered.get(name).getTotalCases());
-                System.out.println("7");
                 row.setDeaths(deaths.get(name).getTotalCases());
-                System.out.println("8");
                 rows.add(row);
             }
         }
-        System.out.println("10");
         return rows;
     }
 

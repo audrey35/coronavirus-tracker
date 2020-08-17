@@ -24,6 +24,18 @@ h1 {
     border-bottom-width: 0.5rem;
 }
 
+#confirmed .card-subtitle {
+    color: #36a2eb;
+}
+
+#recovered .card-subtitle {
+    color: #4bc0c0;
+}
+
+#deaths .card-subtitle {
+    color: #ff6384;
+}
+
 .row {
     padding: 1%;
 }

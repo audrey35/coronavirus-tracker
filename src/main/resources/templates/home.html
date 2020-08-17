@@ -92,10 +92,12 @@
                         ]
                     },
                     options: {
-                        legend: { display: false },
-                        title: {
-                            display: true,
-                            text: 'Predicted world population (millions) in 2050'
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
                         }
                     }
                 });
@@ -150,8 +152,8 @@
                 </thead>
                 <tbody>
                     <tr th:each="row : ${tableRows}">
-                        <td th:text="${row.country}"></td>
                         <td th:text="${row.state}"></td>
+                        <td th:text="${row.country}"></td>
                         <td th:text="${#numbers.formatDecimal(row.confirmed, 0, 'COMMA', 0, 'POINT')}">0</td>
                         <td th:text="${#numbers.formatDecimal(row.recovered, 0, 'COMMA', 0, 'POINT')}">0</td>
                         <td th:text="${#numbers.formatDecimal(row.deaths, 0, 'COMMA', 0, 'POINT')}">0</td>

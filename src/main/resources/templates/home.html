@@ -70,7 +70,7 @@
         </div>
 
         <div class="row">
-            <canvas class="col-sm" id="countryChart" width="400" height="400"></canvas>
+            <canvas class="col-sm" id="countryChart" width="300" height="200"></canvas>
             <script th:if="${country.size() <= 1}" th:inline="javascript">
                 // Bar chart
                 var dataset = [];
@@ -86,7 +86,7 @@
                                 label: "Number of Cases",
                                 data: dataset,
                                 backgroundColor: ["#d6ecfb", "#dbf3f3","#ffe0e6"],
-                                borderColor: ["#4eadee", "#60c8c8", "#ff7693"],
+                                borderColor: ["#4cacec", "#60c8c8", "#ff7693"],
                                 borderWidth: 1
                             }
                         ]

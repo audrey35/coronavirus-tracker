@@ -1,5 +1,5 @@
 # Corona virus Tracking Web App
-![](etc/CoronavirusTracker.png)
+![](etc/coronavirus-tracker.png)
 ## Deployed App
 The app is deployed on [Heroku](https://coronavirus-tracker-web-app.herokuapp.com/).
 

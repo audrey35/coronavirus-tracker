@@ -1,3 +1,18 @@
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
 h1 {
     color: #4a69bb;
 }
@@ -14,11 +29,15 @@ h1 {
 }
 
 #confirmed {
-    border-bottom-color: #a4d4ae;
+    border-bottom-color: #d6ecfb;
 }
 
-#new {
-    border-bottom-color: #f0cf85;
+#recovered {
+    border-bottom-color: #dbf3f3;
+}
+
+#deaths {
+    border-bottom-color: #ffe0e6;
 }
 
 .card h6 {
